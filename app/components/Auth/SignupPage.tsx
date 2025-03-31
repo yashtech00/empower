@@ -36,7 +36,7 @@ function SignupPage() {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl: "/problems",
+                    callbackUrl: "/Role",
                 }).then((res) => {
                     if (res?.error) {
                         setError(res.error);
@@ -49,7 +49,7 @@ function SignupPage() {
             } else if (provider === "github") {
                 signIn(provider, {
                     redirect: false,
-                    callbackUrl: "/problems",
+                    callbackUrl: "/Role",
                 }).then((res) => {
                     if (res?.error) {
                         setError(res.error);

@@ -31,7 +31,7 @@ function SigninPage() {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl: "/problems",
+                    callbackUrl: "/dashboard",
                 })
                 res.then((res) => {
                     if (res?.error) {

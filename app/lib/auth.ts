@@ -17,7 +17,7 @@ export const authOptions = {
       name: "credentials",
       credentials: {
         email: { type: "email" },
-        password: { type: "password" },
+        password: { type: "password" }
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
@@ -50,8 +50,9 @@ export const authOptions = {
             );
             const newUser = await prisma.user.create({
               data: {
-                email: emailValidation.data,
-                password: hashedPassword,
+              email: emailValidation.data,
+              password: hashedPassword,
+              provider: "CREDENTIALS"
               },
             });
             return newUser;
@@ -114,7 +115,8 @@ export const authOptions = {
             const newUser = await prisma.user.create({
               data: {
                 email: profile?.email || "",
-                provider: "Github",
+                password: await bcrypt.hash("defaultPassword", 10),
+                provider: "GITHUB",
               },
             });
           }
