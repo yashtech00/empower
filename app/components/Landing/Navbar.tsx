@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import Link from 'next/link';
+import path from 'path';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -65,13 +66,23 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center space-x-4">
             <Link 
-              href="#" 
+              href={{
+                pathname: "/Auth",
+                query: {
+                  authType:"signin"
+                }
+              }}
               className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
             >
               Sign in
             </Link>
             <Link 
-              href="#" 
+              href={{
+                pathname: "/Auth",
+                query: {
+                  authType:"signup"
+                }
+              }}
               className="button-primary bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
             >
               Get Started

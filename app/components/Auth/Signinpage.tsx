@@ -1,4 +1,5 @@
 "use client"
+import { SignInFlow } from "@/app/types/auth-types";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -14,8 +15,11 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useId, useState } from "react";
 import { Toaster, toast } from "sonner";
 
+interface SignupCard{
+    setFormType:(state:SignInFlow)=>void
+}
 
-function SigninPage() {
+function SigninPage({setFormType:setState}:SignupCard) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
