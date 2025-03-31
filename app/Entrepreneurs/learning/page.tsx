@@ -64,7 +64,7 @@ const courses = [
   },
 ]
 
-export default function CoursesPage() {
+export default function LearningPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="mb-8 text-center">

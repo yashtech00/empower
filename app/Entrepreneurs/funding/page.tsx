@@ -1,4 +1,4 @@
-import FundingCard from "../components/funding-card"
+import FundingCard from "../../components/funding-card"
 
 // This would typically come from your database
 const fundingOptions = [
