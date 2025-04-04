@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client"
+
 import { AuthScreen } from "../components/Auth/AuthScreen";
 import { useSession } from "next-auth/react";
 import {  useSearchParams } from "next/navigation";

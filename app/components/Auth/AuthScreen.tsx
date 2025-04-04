@@ -1,3 +1,4 @@
+"use client"
 import { SignInFlow } from "@/app/types/auth-types";
 import { useState } from "react"
 import { SigninPage } from "./Signinpage";

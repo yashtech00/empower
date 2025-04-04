@@ -1,3 +1,5 @@
+"use client"
+
 import { SignInFlow } from "@/app/types/auth-types";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn, useSession } from "next-auth/react";
-import { useId, useState } from "react";
+import { useState } from "react";
+
 import { Toaster } from "sonner";
 import { toast } from "sonner";
 
@@ -24,7 +27,7 @@ interface SigninCard {
 
 function SignupPage({setFormType : setState}:SigninCard) {
    
-    const id = useId();
+  
     const session = useSession();
 
     const [name, setName] = useState("");
@@ -44,7 +47,7 @@ function SignupPage({setFormType : setState}:SigninCard) {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl: "/Role",
+                    callbackUrl: "/investor_info",
                 }).then((res) => {
                     if (res?.error) {
                         setError(res.error);
@@ -57,7 +60,7 @@ function SignupPage({setFormType : setState}:SigninCard) {
             } else if (provider === "github") {
                 signIn(provider, {
                     redirect: false,
-                    callbackUrl: "/Role",
+                    callbackUrl: "/startup_page",
                 }).then((res) => {
                     if (res?.error) {
                         setError(res.error);
