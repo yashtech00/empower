@@ -19,7 +19,7 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   // Relations
-  role     Role
+  role     Role 
   provider Provider
   courses  UserCourse[]
   funding  Funding[]
@@ -35,7 +35,7 @@ model StartupInfo{
   company_url String
   company_do String
 
-  financial_stage Stage
+  financial_stage Stage @default(STARTUP)
   financial_request String?
   previous_funding String?
   industry String
@@ -45,6 +45,17 @@ model StartupInfo{
 
   user  User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+}
+
+model Invertors_Info{
+  id                  String   @id @default(uuid())
+  usCitizen           Boolean
+  accredited          Boolean
+  accreditationReason String[] // Stores multiple accreditation reasons
+  businessStage       String
+  fundingAmount       Float
+  industryInterests   String[] // Stores multiple industries
+  createdAt           DateTime @default(now())
 }
 
 
@@ -89,7 +100,6 @@ model Funding {
   goal        Float?
   interest    Float?
   term        String?
-  imageUrl    String
   userId      String
   status      String   @default("pending") // pending, active, completed, rejected
   createdAt   DateTime @default(now())
@@ -98,8 +108,6 @@ model Funding {
   // Relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
-
-
 
 enum Provider {
   GITHUB

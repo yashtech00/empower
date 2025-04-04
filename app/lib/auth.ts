@@ -17,10 +17,11 @@ export const authOptions = {
       name: "credentials",
       credentials: {
         email: { type: "email" },
-        password: { type: "password" }
+        password: { type: "password" },
+        role:{ type: "text" }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
+        if (!credentials?.email || !credentials.password || !credentials.role) {
           return null;
         }
 
@@ -52,7 +53,8 @@ export const authOptions = {
               data: {
               email: emailValidation.data,
               password: hashedPassword,
-              provider: "CREDENTIALS"
+                provider: "CREDENTIALS",
+              role:"Entrepreneur",
               },
             });
             return newUser;
