@@ -19,7 +19,7 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   // Relations
-  role     Role 
+  role     Role @default(ENTREPRENEUR)
   provider Provider
   courses  UserCourse[]
   funding  Funding[]

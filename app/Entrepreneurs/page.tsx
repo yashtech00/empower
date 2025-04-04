@@ -1,11 +1,11 @@
-import FundingPage from "./funding/page";
-import LearningPage from "./learning/page";
+import { Info } from "./Info/page";
+
+
 
 export default function () {
     return (
         <div>
-            <LearningPage />
-            <FundingPage/>
+            <Info/>
         </div>
     )
 }

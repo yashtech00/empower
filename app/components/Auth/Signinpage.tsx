@@ -20,14 +20,15 @@ export function SignInCard({setFormType:setState}:SignInFlowProps) {
     const [pending, setPending] = useState(false);
     const router = useRouter();
 
-    const SignInWithProvider = async (provider: "GITHUB" | "CREDENTIALS") => {
+
+    const SignInWithProvider = async (provider: "github" | "CREDENTIALS") => {
         try {
             if (provider === "CREDENTIALS") {
                 const res = signIn(provider, {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl: "/home"
+                    callbackUrl: "/account"
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -38,15 +39,18 @@ export function SignInCard({setFormType:setState}:SignInFlowProps) {
                     }
                     setPending(false);
                 })
-            } else if (provider === "GITHUB") {
+            } else if (provider === "github") {
 
                 const res = signIn(provider, {
                     redirect: false,
-                    callbackUrl: "/home"
+                    callbackUrl: "/account"
                 })
                 res.then((res) => {
                     if (res?.error) {
                         setError(res.error);
+                    }
+                    if (!res?.error) {
+                        router.push("/")
                     }
                     setPending(false);
                 })
@@ -62,7 +66,7 @@ export function SignInCard({setFormType:setState}:SignInFlowProps) {
         
         SignInWithProvider("CREDENTIALS");
     }
-    const handleGithub = async (provider: "GITHUB") => {
+    const handleGithub = async (provider: "github") => {
         setError("");
         setPending(true);
         SignInWithProvider(provider);
@@ -74,13 +78,14 @@ export function SignInCard({setFormType:setState}:SignInFlowProps) {
             <div className="flex flex-col justify-center md:flex-row bg-white-300  overflow-hidden w-[30%] ">
                     <div className="p-8 w-full mt-12">
                         <h1 className="text-2xl font-bold mb-4">PDF-XML:</h1>
-                    <h1 className="flex text-xl font-semibold mb-6">Sign In</h1>
-                    <form className="space-y-4" onClick={() => handleCredentials} >
+                        <h1 className="flex text-xl font-semibold mb-6">Sign In</h1>
                         <div className="space-y-2 flex justify-center">
-                            <button className="text-white bg-black px-4 py-2 w-full  rounded-lg" onClick={(e) => handleGithub("GITHUB")}>
+                            <button className="text-white bg-black px-4 py-2 w-full  rounded-lg" onClick={(e) => handleGithub("github")}>
                                 Continue with Github
                             </button>
                         </div>
+                    <form className="space-y-4" onClick={() => handleCredentials} >
+                       
                         <h1 className="text-gray-500">--------------- or Login with Email---------------</h1>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Email</label>
@@ -125,7 +130,7 @@ export function SignInCard({setFormType:setState}:SignInFlowProps) {
                         
             </div>
             <div>
-                <Image src="https://img.freepik.com/free-vector/hand-drawn-essay-illustration_23-2150268421.jpg" height={700} width={700} alt="Mobile Application Development" />
+                {/* <Image src="https://img.freepik.com/free-vector/hand-drawn-essay-illustration_23-2150268421.jpg" height={700} width={700} alt="Mobile Application Development" /> */}
             </div>
             </div>
         </div>

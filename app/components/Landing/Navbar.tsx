@@ -3,10 +3,13 @@ import { Menu, X } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import Link from 'next/link';
 import path from 'path';
+import { Button } from '@/components/ui/button';
+import { signOut, useSession } from 'next-auth/react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const session = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,8 +27,7 @@ const Navbar = () => {
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-80 transition-all duration-300 ease-in-out",
-        isScrolled ? "py-3 bg-background/80 backdrop-blur-lg shadow-md" : "py-5 bg-transparent"
+        "fixed top-0 left-0 right-0 z-80 transition-all duration-300 ease-in-out py-3 backdrop-blur-lg shadow-md bg-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,7 +60,36 @@ const Navbar = () => {
             </Link>
             
           </nav>
-
+          {!session.data?.user ? (
+          <div className="hidden md:flex items-center space-x-4">
+          <Link 
+            href={{
+              pathname: "/Auth",
+              query: {
+                authType:"signin"
+              }
+            }}
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+          >
+            Sign in
+          </Link>
+          <Link 
+            href={{
+              pathname: "/Auth",
+              query: {
+                authType:"signup"
+              }
+            }}
+            className="button-primary bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            Get Started
+          </Link>
+        </div>
+          ): (
+              <div>
+                <Button onClick={async()=>await signOut()}>Logout</Button>
+            </div>
+        )}
           
 
           {/* Mobile Menu Button */}

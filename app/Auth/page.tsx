@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import {  useSearchParams } from "next/navigation";
 import { SignInFlow } from "../types/auth-types";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 
 export default function Auth() {
@@ -16,9 +17,12 @@ export default function Auth() {
     const session = useSession();
     const router = useRouter();
      
-    if (session.status === "authenticated") {
-        router.push("/");
-    }
+    // useEffect(() => {
+    //     if (session.status === "authenticated") {
+    //         router.push("/");
+    //     }
+    // },[session.status, router])
+    
 
     return <AuthScreen authType={ formType} />
 }

@@ -1,6 +1,6 @@
 import Credentials from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
-import  prisma  from "../db";
+import  prisma  from "../../db";
 import { emailSchema, passwordSchema } from "./schema";
 
 // Define or import the Role type
@@ -13,8 +13,8 @@ import { JWT } from "next-auth/jwt";
 export const authOptions = {
   providers: [
     GitHubProvider({
-      clientId: process.env.Github_Id || "",
-      clientSecret: process.env.Github_Secret || "",
+      clientId: process.env.Client_Id || "",
+      clientSecret: process.env.Client_secrets || "",
     }),
     Credentials({
       name: "credentials",
@@ -119,12 +119,15 @@ export const authOptions = {
           if (!user) {
             const newUser = await prisma.user.create({
               data: {
-                email: profile?.email || "",
-                password: await bcrypt.hash("defaultPassword", 10),
-                provider: "GITHUB",
-                role: "ENTREPRENEUR", // Assign a default role or adjust as needed
+              email: profile?.email || "",
+              password: await bcrypt.hash("defaultPassword", 10),
+              provider: "GITHUB",
+              role: "ENTREPRENEUR" // Explicitly cast null to Role
               },
             });
+          }
+          if (!user?.role) {
+            return "/account"
           }
         }
         return true;

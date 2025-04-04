@@ -1,29 +1,33 @@
-import prisma from "@/app/db";
+import prisma from "@/db";
 import { authOptions } from "@/app/lib/auth";
+
 import { getServerSession } from "next-auth";
+import { getSession } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server";
+ // Update path as per your project
 
+export async function POST(req: NextRequest) {
+ 
 
-export async function POST(req:NextRequest, res:NextResponse) {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession( authOptions);
+  if (!session || !session.user) {
+    return NextResponse.json({ message: "Unauthorized" },{ status: 401 });
+  }
 
-    if (!session?.user) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 404 });
-    }
+  const { role } = await req.json();
+  if (!["ENTREPRENEUR", "INVESTOR"].includes(role)) {
+    return NextResponse.json({ message: "Invalid role" },{status:400});
+  }
+
     try {
-        const body = await req.json();
-        const { role } = body;
-        const newRole = await prisma.role.create({
-            data: {
-                role: body.role,
-                userId:session.user.id
-            }
-        })
-        return NextResponse.json({message:"Role created successfully"},{status:201})
-    } catch (e) {
-        console.error("Internal server error");
+        await prisma.user.update({
+            where: { email: session.user.email },
+            data: { role },
+        });
 
-        
-    }
+        return NextResponse.json({ message: "Role updated successfully" }, { status: 200 });
+    } catch (error) {
+        console.error(error);
+       return  NextResponse.json({ message: "Server error" }, {status:500});
+  }
 }
-
