@@ -4,7 +4,7 @@ import { AuthScreen } from "../components/Auth/AuthScreen";
 import { useSession } from "next-auth/react";
 import {  useSearchParams } from "next/navigation";
 import { SignInFlow } from "../types/auth-types";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 
 export default function Auth() {

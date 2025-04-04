@@ -1,158 +1,133 @@
-"use client"
-import { SignInFlow } from "@/app/types/auth-types";
-import { Button } from "@/components/ui/button";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useId, useState } from "react";
-import { Toaster, toast } from "sonner";
+"use client";
 
-interface SignupCard{
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Image from "next/image";
+import { SignInFlow } from "@/app/types/auth-types";
+
+
+interface SignInFlowProps{
     setFormType:(state:SignInFlow)=>void
 }
 
-function SigninPage({setFormType:setState}:SignupCard) {
+export function SignInCard({setFormType:setState}:SignInFlowProps) {
+
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const session = useSession();
-    const id = useId();
+    const [pending, setPending] = useState(false);
+    const router = useRouter();
 
-    const SigninProvider = (provider: "github" | "credentials") => {
+    const SignInWithProvider = async (provider: "GITHUB" | "CREDENTIALS") => {
         try {
-            if (provider === "credentials") {
+            if (provider === "CREDENTIALS") {
                 const res = signIn(provider, {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl: "/dashboard",
+                    callbackUrl: "/home"
                 })
                 res.then((res) => {
                     if (res?.error) {
-                        setError(res.error);
-                        toast.error("Invalid Credentials")
-                    } else {
-                        toast.success("Successfully Signed Up")
+                        setError(res.error)
                     }
-                    setLoading(false);
+                    if (!res?.error) {
+                        router.push("/")
+                    }
+                    setPending(false);
                 })
-            } else if (provider === "github") {
+            } else if (provider === "GITHUB") {
+
                 const res = signIn(provider, {
                     redirect: false,
-                    callbackUrl: "/problems"
+                    callbackUrl: "/home"
                 })
                 res.then((res) => {
                     if (res?.error) {
                         setError(res.error);
-                        toast.error("Invalid Github")
-                    } else {
-                        toast.success("Successfully Signed Up")
                     }
-                    setLoading(false);
+                    setPending(false);
                 })
             }
         } catch (e) {
-            console.log(e);
-            setError("Internal server error");
-            setLoading(true);
+            console.error(e);
         }
     }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleCredentials = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         setError("");
-        SigninProvider("credentials")
-
+        
+        SignInWithProvider("CREDENTIALS");
     }
-    const handleGithub = (provider: "github") => {
+    const handleGithub = async (provider: "GITHUB") => {
         setError("");
-        SigninProvider(provider);
-        setLoading(true);
-
+        setPending(true);
+        SignInWithProvider(provider);
     }
-    
+
     return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <button>
-                    Sign In
-                </button>
-            </DialogTrigger>
-            <DialogContent>
-                <div className="flex flex-col items-center gap-2">
-                    <div
-                        className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border"
-                        aria-hidden="true"
-                    >
-                        <svg
-                            className="stroke-zinc-800 dark:stroke-zinc-100"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 32 32"
-                            aria-hidden="true"
-                        >
-                            <circle cx="16" cy="16" r="12" fill="none" strokeWidth="8" />
-                        </svg>
-                    </div>
-                    <DialogHeader>
-                        <DialogTitle className="sm:text-center">Sign In CodePlus</DialogTitle>
-                        <DialogDescription className="sm:text-center">
-                            We just need a few details to get you started.
-                        </DialogDescription>
-                    </DialogHeader>
-                </div>
-
-                <form className="space-y-5" onSubmit={handleSubmit}>
-                    <div className="space-y-4">
-
-                        <div className="space-y-2">
-                            <Label htmlFor={`${id}-email`}>Email</Label>
-                            <Input id={`${id}-email`} placeholder="hi@yourcompany.com" type="email" required onChange={(e) => setEmail(e.target.value)} />
+        <div className="flex justify-center items-center min-h-screen">
+            <div className=" flex justify-between gap-4 w-[90%]  p-4 ">
+            <div className="flex flex-col justify-center md:flex-row bg-white-300  overflow-hidden w-[30%] ">
+                    <div className="p-8 w-full mt-12">
+                        <h1 className="text-2xl font-bold mb-4">PDF-XML:</h1>
+                    <h1 className="flex text-xl font-semibold mb-6">Sign In</h1>
+                    <form className="space-y-4" onClick={() => handleCredentials} >
+                        <div className="space-y-2 flex justify-center">
+                            <button className="text-white bg-black px-4 py-2 w-full  rounded-lg" onClick={(e) => handleGithub("GITHUB")}>
+                                Continue with Github
+                            </button>
                         </div>
-                        <div className="space-y-2">
-                            <Label htmlFor={`${id}-password`}>Password</Label>
-                            <Input
-                                id={`${id}-password`}
-                                placeholder="Enter your password"
-                                type="password"
-                                required
-                                onChange={(e) => setPassword(e.target.value)}
+                        <h1 className="text-gray-500">--------------- or Login with Email---------------</h1>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Email</label>
+                            <input
+                                type="email"
+                                    required
+                                    disabled={pending}
+                                    value={email}
+                                placeholder="Enter your email"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                    </div>
-                    <Button type="submit" className="w-full">
-                        Sign In
-                    </Button>
-                </form>
-
-                <div className="flex items-center gap-3 before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border">
-                    <span className="text-xs text-muted-foreground">Or</span>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Password</label>
+                            <input
+                                type="Password"
+                                    required
+                                    disabled={pending}
+                                    value={password}
+                                placeholder="Enter your Password"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                
+                                disabled={pending}
+                        >
+                            Sign In
+                        </button>
+                        <p className="flex justify-center">Don't have an account
+                         
+                                <span className="mx-2 text-blue-600 underline" onClick={()=>setState("signup")}>Sign up</span>
+                            
+                        </p>
+                    </form>
                 </div>
-
-                <Button variant="outline" onClick={() => handleGithub("github")}>Continue with Github</Button>
-
-                <p className="text-center text-xs text-muted-foreground">
-                    By signing up you agree to our{" "}
-                    <a className="underline hover:no-underline" href="#">
-                        Terms
-                    </a>
-                    .
-                </p>
-            </DialogContent>
-            <Toaster />
-        </Dialog>
+                        
+            </div>
+            <div>
+                <Image src="https://img.freepik.com/free-vector/hand-drawn-essay-illustration_23-2150268421.jpg" height={700} width={700} alt="Mobile Application Development" />
+            </div>
+            </div>
+        </div>
     );
 }
-
-export { SigninPage };

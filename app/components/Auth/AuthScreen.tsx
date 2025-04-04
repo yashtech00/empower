@@ -1,8 +1,8 @@
 "use client"
 import { SignInFlow } from "@/app/types/auth-types";
 import { useState } from "react"
-import { SigninPage } from "./Signinpage";
-import { SignupPage } from "./SignupPage";
+import { SignInCard } from "./Signinpage";
+import { SignUpCard } from "./SignupPage";
 
 
 export function AuthScreen({ authType }:{authType:SignInFlow}) {
@@ -12,9 +12,9 @@ export function AuthScreen({ authType }:{authType:SignInFlow}) {
     return (
         <div>
             {formType == "signin" ? (
-                <SigninPage setFormType={setFormType} />
+                <SignInCard setFormType={setFormType} />
             ) : (
-                    <SignupPage setFormType={setFormType}/>
+                    <SignUpCard setFormType={setFormType}/>
             )}
         </div>
     )
