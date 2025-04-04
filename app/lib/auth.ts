@@ -2,6 +2,9 @@ import Credentials from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import  prisma  from "../db";
 import { emailSchema, passwordSchema } from "./schema";
+
+// Define or import the Role type
+type Role = "ENTREPRENEUR" | "INVESTOR"; // Replace with actual roles if different
 import bcrypt from "bcrypt";
 import { NextAuthOptions, Session } from "next-auth";
 
@@ -53,8 +56,8 @@ export const authOptions = {
               data: {
               email: emailValidation.data,
               password: hashedPassword,
-                provider: "CREDENTIALS",
-              role:"Entrepreneur",
+              provider: "CREDENTIALS",
+              role: credentials.role as Role,
               },
             });
             return newUser;
@@ -119,6 +122,7 @@ export const authOptions = {
                 email: profile?.email || "",
                 password: await bcrypt.hash("defaultPassword", 10),
                 provider: "GITHUB",
+                role: "ENTREPRENEUR", // Assign a default role or adjust as needed
               },
             });
           }

@@ -3,8 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight, BarChart3, BookOpen, DollarSign, Users } from "lucide-react"
-import CourseCard from "../components/course-card"
-import FundingCard from "../components/funding-card"
+import CourseCard from "../../components/course-card"
+import FundingCard from "../../components/funding-card"
 
 // This would typically come from your database based on the authenticated user
 const userCourses = [

@@ -39,55 +39,27 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <Link 
-              href="/" 
+              href="/Investors" 
               className=" hover:text-primary hover:bg-orange-400 px-4 py-2 rounded-md transition duration-200"
             >
-              Home
+              Invest
             </Link>
             <Link 
               href="/funding" 
               className=" hover:text-primary hover:bg-orange-400 px-4 py-2 rounded-md transition duration-200"
             >
-              Financing
+              Raise Capital
             </Link>
             <Link 
               href="/learning/courses" 
               className=" hover:text-primary hover:bg-orange-400 px-4 py-2 rounded-md transition duration-200"
             >
-              Literacy
+              Education
             </Link>
-            <Link 
-              href="#about" 
-              className=" hover:text-primary hover:bg-orange-400 px-4 py-2 rounded-md transition duration-200"
-            >
-              About
-            </Link>
+            
           </nav>
 
-          <div className="hidden md:flex items-center space-x-4">
-            <Link 
-              href={{
-                pathname: "/Auth",
-                query: {
-                  authType:"signin"
-                }
-              }}
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-            >
-              Sign in
-            </Link>
-            <Link 
-              href={{
-                pathname: "/Auth",
-                query: {
-                  authType:"signup"
-                }
-              }}
-              className="button-primary bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              Get Started
-            </Link>
-          </div>
+          
 
           {/* Mobile Menu Button */}
           <button 
