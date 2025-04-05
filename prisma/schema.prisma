@@ -24,6 +24,7 @@ model User {
   courses  UserCourse[]
   funding  Funding[]
   startup StartupInfo[]
+  investors_info Invertors_Info[]
 }
 
 model StartupInfo{
@@ -50,12 +51,12 @@ model StartupInfo{
 model Invertors_Info{
   id                  String   @id @default(uuid())
   usCitizen           Boolean
-  accredited          Boolean
-  accreditationReason String[] // Stores multiple accreditation reasons
   businessStage       String
   fundingAmount       Float
   industryInterests   String[] // Stores multiple industries
   createdAt           DateTime @default(now())
+  userId            String
+  user User @relation(fields: [userId], references: [id])
 }
 
 
