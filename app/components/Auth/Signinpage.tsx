@@ -77,7 +77,7 @@ export function SignInCard({setFormType:setState}:SignInFlowProps) {
             <div className=" flex justify-between gap-4 w-[90%]  p-4 ">
             <div className="flex flex-col justify-center md:flex-row bg-white-300  overflow-hidden w-[30%] ">
                     <div className="p-8 w-full mt-12">
-                        <h1 className="text-2xl font-bold mb-4">PDF-XML:</h1>
+                        <h1 className="text-2xl font-bold mb-4">Empower</h1>
                         <h1 className="flex text-xl font-semibold mb-6">Sign In</h1>
                         <div className="space-y-2 flex justify-center">
                             <button className="text-white bg-black px-4 py-2 w-full  rounded-lg" onClick={(e) => handleGithub("github")}>
@@ -95,7 +95,7 @@ export function SignInCard({setFormType:setState}:SignInFlowProps) {
                                     disabled={pending}
                                     value={email}
                                 placeholder="Enter your email"
-                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
@@ -107,14 +107,14 @@ export function SignInCard({setFormType:setState}:SignInFlowProps) {
                                     disabled={pending}
                                     value={password}
                                 placeholder="Enter your Password"
-                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                     onChange={(e) => setPassword(e.target.value)}
                                     
                             />
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="w-full bg-orange-600 text-white py-2 px-4 rounded-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                                 
                                 disabled={pending}
                         >
@@ -122,7 +122,7 @@ export function SignInCard({setFormType:setState}:SignInFlowProps) {
                         </button>
                         <p className="flex justify-center">Don't have an account
                          
-                                <span className="mx-2 text-blue-600 underline" onClick={()=>setState("signup")}>Sign up</span>
+                                <span className="mx-2 text-orange-600 underline" onClick={()=>setState("signup")}>Sign in</span>
                             
                         </p>
                     </form>

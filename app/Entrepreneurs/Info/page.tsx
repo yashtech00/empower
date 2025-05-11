@@ -3,7 +3,7 @@
 import { StartupInfo } from "@/app/components/Startup-Info"
 import { useState } from "react"
 
-export function Info() {
+export default function Info() {
    
 
     return (

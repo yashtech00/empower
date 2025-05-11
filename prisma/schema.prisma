@@ -30,7 +30,6 @@ model User {
 model StartupInfo{
   id String @id @default(uuid())
   company_name String
-  contact_name String
   phone_number String
   email String @unique
   company_url String
