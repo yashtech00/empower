@@ -1,4 +1,5 @@
-import { Info } from "./Info/page";
+import Info from "./Info/page";
+
 
 
 

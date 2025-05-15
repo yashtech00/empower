@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function StartupInfo() {
@@ -11,6 +12,7 @@ export function StartupInfo() {
     const [financial_request, setFundRequest] = useState("")
     const [previous_funding, setPreviousFund] = useState("")
     const [industry, setIndustry] = useState("")
+    const router = useRouter();
     
     const handleSubmit = async(e: React.FormEvent) => {
         e.preventDefault();
@@ -19,9 +21,9 @@ export function StartupInfo() {
         };
         console.log('Form submitted:', formData);
         try {
-            const res = await axios.post("/api/startupInfo",{formData})
+            const res = await axios.post("/api/startupInfo",formData)
             console.log(res,"startup infos");
-            
+            router.push("/Entrepreneurs/dashboard")
         } catch (e) {
             console.error(e);
         }
@@ -124,10 +126,10 @@ export function StartupInfo() {
                                 required
                             >
                                 <option value="">Select stage</option>
-                                <option value="STARTUP">STARTUP</option>
-                                <option value="EARLY">EARLY</option>
-                                <option value="EXPANSION">EXPANSION</option>
-                                <option value="LATER">LATER</option>
+                                <option value="STARTUP">Startup</option>
+                                <option value="EARLY">Early</option>
+                                <option value="EXPANSION">Expansion</option>
+                                <option value="LATER">Later</option>
                                 
                             </select>
                         </div>

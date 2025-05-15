@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'static.vecteezy.com',
       },
+      {
+         protocol: 'https',
+        hostname: 'img.freepik.com',
+      }
     ]
   }
 };

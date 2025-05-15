@@ -7,27 +7,29 @@ import { useState } from "react";
 import Image from "next/image";
 import { SignInFlow } from "@/app/types/auth-types";
 
-interface SignInFlowProps {
+interface SignUpFlowProps {
     setFormType: (state: SignInFlow) => void
 }
 
-export function SignUpCard({ setFormType: setState }: SignInFlowProps) {
+export function SignUpCard({ setFormType: setState }: SignUpFlowProps) {
 
 
     const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [pending, setPending] = useState(false);
     const router = useRouter();
 
-    const SignInWithProvider = async (provider: "github" | "CREDENTIALS") => {
+    const SignUpWithProvider = async (provider:"CREDENTIALS") => {
         try {
             if (provider === "CREDENTIALS") {
                 const res = signIn(provider, {
                     email,
                     password,
+                    name,
                     redirect: false,
-                    callbackUrl: "/account"
+                    callbackUrl: "/Role"
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -36,22 +38,7 @@ export function SignUpCard({ setFormType: setState }: SignInFlowProps) {
                     }
                     setPending(false);
                 })
-            } else if (provider === "github") {
-
-                const res = signIn(provider, {
-                    redirect: false,
-                    callbackUrl: "/account"
-                })
-                res.then((res) => {
-                    if (res?.error) {
-                        setError(res.error);
-                    }
-                    if (!res?.error) {
-                        router.push("/")
-                    }
-                    setPending(false);
-                })
-            }
+            } 
         } catch (e) {
             console.error(e);
         }
@@ -59,29 +46,31 @@ export function SignUpCard({ setFormType: setState }: SignInFlowProps) {
 
     const handleCredentials = async (provider: "CREDENTIALS") => {
         setError("");
-        SignInWithProvider(provider);
+        SignUpWithProvider(provider);
     }
-    const handleGithub = async (provider: "github") => {
-        setError("");
-        setPending(true);
-        SignInWithProvider(provider);
-    }
-
+   
     return (
-        <div className="flex justify-center items-center min-h-screen">
+        <div className="flex justify-center items-center min-h-screen text-white">
             <div className=" flex justify-between gap-4 w-[90%]  p-4 ">
                 <div className="flex flex-col justify-center md:flex-row bg-white-300  overflow-hidden w-[30%] ">
                     <div className="p-8 w-full mt-12">
-                        <h1 className="text-2xl font-bold mb-4">PDF-XML:</h1>
+                        <h1 className="text-2xl font-bold mb-4">Empower</h1>
                         <h1 className="flex text-xl font-semibold mb-6">Sign Up</h1>
-                        <div className="space-y-2 flex justify-center">
-                                <button className="text-white bg-black px-4 py-2 w-full  rounded-lg" onClick={(e) => handleGithub("github")}>
-                                    Continue with Github
-                                </button>
-                            </div>
+                        
                         <form className="space-y-4" >
                             
-                            <h1 className="text-gray-500">--------------- or Signup with Email--------------</h1>
+                           <div>
+                                <label className="block text-sm font-medium text-gray-700">Fullname</label>
+                                <input
+                                    type="email"
+                                    disabled={pending}
+                                    value={name}
+                                    required
+                                    placeholder="Enter your email"
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Email</label>
                                 <input
@@ -112,7 +101,7 @@ export function SignUpCard({ setFormType: setState }: SignInFlowProps) {
                                 onClick={() => handleCredentials("CREDENTIALS")}
                                 disabled={pending}
                             >
-                                Sign In
+                                Sign Up
                             </button>
                             <p className="flex justify-center">Already have an account?
 

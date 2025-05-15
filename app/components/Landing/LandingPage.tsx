@@ -3,7 +3,6 @@
 import Navbar from "./Navbar"
 import FinancingSection from "./FinancingSection"
 import LiteracySection from "./LiteracySection"
-import Footer from "../footer"
 import Image from "next/image"
 import { HeroDemo } from "./Hero"
 
@@ -21,10 +20,11 @@ export function LandingPage() {
             </div>
             <Navbar />
             <div className="z-50">
+                <Navbar/>
                 <HeroDemo />
                 <FinancingSection />
                 <LiteracySection />
-                <Footer />
+                
             </div>
         </div>
     )
