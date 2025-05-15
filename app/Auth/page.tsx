@@ -17,11 +17,11 @@ export default function Auth() {
     const session = useSession();
     const router = useRouter();
      
-    // useEffect(() => {
-    //     if (session.status === "authenticated") {
-    //         router.push("/");
-    //     }
-    // },[session.status, router])
+    useEffect(() => {
+        if (session.status === "authenticated") {
+            router.push("/");
+        }
+    },[session.status, router])
     
 
     return <AuthScreen authType={ formType} />

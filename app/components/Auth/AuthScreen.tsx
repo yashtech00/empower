@@ -10,7 +10,7 @@ export function AuthScreen({ authType }:{authType:SignInFlow}) {
     const [formType, setFormType] = useState<SignInFlow>(authType || "signin");
 
     return (
-        <div>
+        <div className="flex justify-center">
             {formType == "signin" ? (
                 <SignInCard setFormType={setFormType} />
             ) : (

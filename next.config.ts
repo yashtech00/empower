@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       },
       {
          protocol: 'https',
-        hostname: 'img.freepik.com',
+        hostname: 'png.pngtree.com',
       }
     ]
   }

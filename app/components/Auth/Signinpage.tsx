@@ -26,12 +26,18 @@ export function SignInCard({ setFormType: setState }: SignInFlowProps) {
         setPending(true);
         try {
             if (provider === "CREDENTIALS") {
+                let callbackUrl = "/";
+                if (role === "ENTREPRENEUR") {
+                    callbackUrl = "/Entrepreneurs/dashboard";
+                } else if (role === "INVESTOR") {
+                    callbackUrl = "/Investors/dashboard";
+                }
                 const res = await signIn(provider, {
                     email,
                     password,
                     role,
                     redirect: false,
-                    callbackUrl: "/account", // fallback if role-based redirect fails
+                    callbackUrl,
                 });
 
                 if (res?.error) {
@@ -72,7 +78,9 @@ export function SignInCard({ setFormType: setState }: SignInFlowProps) {
 
 
     return (
-        <div className="flex justify-center items-center min-h-screen text-white">
+        
+        <div className="flex justify-center items-center min-h-screen text-white w-[70%]">
+            <div className="flex  gap-14 justify-between w-full ">
             <div className=" flex justify-center  p-4 bg-neutral-900 rounded-2xl w-md  ">
                 <div className="flex  justify-center md:flex-row bg-white-300  overflow-hidden w-full ">
                     <div className=" w-full mt-12">
@@ -142,8 +150,9 @@ export function SignInCard({ setFormType: setState }: SignInFlowProps) {
                 </div>
                 
             </div>
-            <div>
-                    <Image src="https://img.freepik.com/free-vector/hand-drawn-essay-illustration_23-2150268421.jpg" height={700} width={700} alt="Mobile Application Development" />
+            <div className=" items-center flex">
+                    <Image src="https://png.pngtree.com/png-vector/20210508/ourmid/pngtree-crowdfunding-or-investment-project-flat-concept-png-image_3261286.jpg" height={300} width={300} alt="Mobile Application Development" className="" />
+                </div>
                 </div>
         </div>
     );

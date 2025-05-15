@@ -117,7 +117,7 @@
                 email: profile?.email,
               },
             });
-
+            
             if (!user) {
               const newUser = await prisma.user.create({
                 data: {
@@ -125,11 +125,7 @@
                 password: await bcrypt.hash("defaultPassword", 10),
                 provider: "GITHUB",
                 },
-              });
-              
-            }
-            if (!user?.role) {
-              return "/Role"
+              }); 
             }
           }
           return true;
